@@ -10,7 +10,17 @@ var createNewTaskElement = function(taskString){
 	var editInput = document.createElement("input");
 	var editButton = document.createElement("button");
 	var deleteButton = document.createElement("button");
-	
+		
+	checkBox.type = "checkbox";
+	editInput.type = "text";
+
+	editButton. innerText = "Edit";
+	editButton.className = "edit";
+	deleteButton.innerText = "Delete";
+	deleteButton.className = "delete";
+
+	label.innerText = taskString;
+
 	listItem.appendChild(checkBox);
 	listItem.appendChild(label);
 	listItem.appendChild(editInput);
@@ -22,13 +32,29 @@ var createNewTaskElement = function(taskString){
 
 var addTask = function(){
 	console.log("Add task...")
-	var listItem = createNewTaskElement("Some new Task");
+	var listItem = createNewTaskElement(taskInput.value);
 	incompleteTasksHolder.appendChild(listItem);
 	bindTaskEvents(listItem, taskCompleted);
 }
 
 var editTask = function(){
-	console.log("edit task...")
+	console.log("edit task...");
+
+	var listItem = this.parentNode;
+
+	var editIput = listItem.querySelector("input[type=text]");
+
+	var label = listItem.querySelector("label");
+
+	var containsClass = listItem.classList.contains("editMode");
+
+	if(containsClass){
+		label.innerText = editInput.value;
+	}else{
+		editInput.value = label.innerText;
+	}
+
+	listItem.classList.toggle("editMode");
 }
 
 var deleteTask = function(){
